@@ -1,3 +1,5 @@
+// Артём Чупров Семёнович ИВТ-19-1б
+// первая часть лабораторной работы по классам
 //fraction.h
 #pragma once
 struct fraction
@@ -49,6 +51,7 @@ int main()
 	cout << "Стоимость разговора: " << A.cost() << endl;
 }
 
+//вторая часть лабораторной работы по классам
 //Kvitanciya.h
 #pragma once
 #include <iostream>
