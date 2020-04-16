@@ -1,0 +1,3 @@
+﻿  классы2.cpp
+MSVCRT.lib(exe_main.obj) : error LNK2001: неразрешенный внешний символ "_main"
+D:\Инфа\классы2\Release\классы2.exe : fatal error LNK1120: неразрешенных внешних элементов: 1
