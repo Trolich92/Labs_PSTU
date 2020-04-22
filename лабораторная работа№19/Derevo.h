@@ -41,7 +41,7 @@ point* Tree(int n, point* p)
 	nl = n / 2;
 	nr = n - nl - 1;
 	r = new point;
-	cout << "Ââåäèòå ýëåìåíò äåðåâà: ";
+	cout << "Ã‚Ã¢Ã¥Ã¤Ã¨Ã²Ã¥ Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã² Ã¤Ã¥Ã°Ã¥Ã¢Ã : ";
 	cin >> r->data;
 	r->left = Tree(nl, r->left);
 	r->right = Tree(nr, r->right);
