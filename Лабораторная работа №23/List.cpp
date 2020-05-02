@@ -24,7 +24,6 @@ List::List(const List& a)
 	beg = a.beg;
 	end = a.end;
 }
-//äåñòðóêòîð
 List::~List()
 {
 	delete[]data;
