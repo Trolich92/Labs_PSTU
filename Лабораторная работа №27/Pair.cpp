@@ -88,7 +88,6 @@ ostream& operator<<(ostream& out, const Pair& t)
 {
 	return (out << t.first << " : " << t.second);
 }
-//äðóæåñòâåííûå ôóíêöèè äëÿ ðàáîòû ñ ôàéëîâûìè ïîòîêàìè
 fstream& operator>>(fstream& fin, Pair& p)
 {
 	fin >> p.first;
