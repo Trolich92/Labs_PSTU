@@ -1,14 +1,14 @@
-//Артём Чупров, лаб.27, Сохранение данных в файле с использованием потоков
-//Создать класс Pair(пара чисел).Пара должна быть представлено двумя полями : типа int для первого числа и типа double для второго.
-//Первое число при выводе на экран должно быть отделено от второго числа двоеточием.
-//Реализовать :
-//1.операции сравнения(<, >).
-//2.операция ++, которая работает следующим образом : если форма операции префиксная,
-//то увеличивается первое число, если форма операции постфиксная, то увеличивается второе число.
-//Задание:
-//Удалить все записи большие заданного значения.
-//Увеличить все записи с заданным значением на число L.
-//Добавить K записей после записи с номером N.
+//РђСЂС‚С‘Рј Р§СѓРїСЂРѕРІ, Р»Р°Р±.27, РЎРѕС…СЂР°РЅРµРЅРёРµ РґР°РЅРЅС‹С… РІ С„Р°Р№Р»Рµ СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј РїРѕС‚РѕРєРѕРІ
+//РЎРѕР·РґР°С‚СЊ РєР»Р°СЃСЃ Pair(РїР°СЂР° С‡РёСЃРµР»).РџР°СЂР° РґРѕР»Р¶РЅР° Р±С‹С‚СЊ РїСЂРµРґСЃС‚Р°РІР»РµРЅРѕ РґРІСѓРјСЏ РїРѕР»СЏРјРё : С‚РёРїР° int РґР»СЏ РїРµСЂРІРѕРіРѕ С‡РёСЃР»Р° Рё С‚РёРїР° double РґР»СЏ РІС‚РѕСЂРѕРіРѕ.
+//РџРµСЂРІРѕРµ С‡РёСЃР»Рѕ РїСЂРё РІС‹РІРѕРґРµ РЅР° СЌРєСЂР°РЅ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РѕС‚РґРµР»РµРЅРѕ РѕС‚ РІС‚РѕСЂРѕРіРѕ С‡РёСЃР»Р° РґРІРѕРµС‚РѕС‡РёРµРј.
+//Р РµР°Р»РёР·РѕРІР°С‚СЊ :
+//1.РѕРїРµСЂР°С†РёРё СЃСЂР°РІРЅРµРЅРёСЏ(<, >).
+//2.РѕРїРµСЂР°С†РёСЏ ++, РєРѕС‚РѕСЂР°СЏ СЂР°Р±РѕС‚Р°РµС‚ СЃР»РµРґСѓСЋС‰РёРј РѕР±СЂР°Р·РѕРј : РµСЃР»Рё С„РѕСЂРјР° РѕРїРµСЂР°С†РёРё РїСЂРµС„РёРєСЃРЅР°СЏ,
+//С‚Рѕ СѓРІРµР»РёС‡РёРІР°РµС‚СЃСЏ РїРµСЂРІРѕРµ С‡РёСЃР»Рѕ, РµСЃР»Рё С„РѕСЂРјР° РѕРїРµСЂР°С†РёРё РїРѕСЃС‚С„РёРєСЃРЅР°СЏ, С‚Рѕ СѓРІРµР»РёС‡РёРІР°РµС‚СЃСЏ РІС‚РѕСЂРѕРµ С‡РёСЃР»Рѕ.
+//Р—Р°РґР°РЅРёРµ:
+//РЈРґР°Р»РёС‚СЊ РІСЃРµ Р·Р°РїРёСЃРё Р±РѕР»СЊС€РёРµ Р·Р°РґР°РЅРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ.
+//РЈРІРµР»РёС‡РёС‚СЊ РІСЃРµ Р·Р°РїРёСЃРё СЃ Р·Р°РґР°РЅРЅС‹Рј Р·РЅР°С‡РµРЅРёРµРј РЅР° С‡РёСЃР»Рѕ L.
+//Р”РѕР±Р°РІРёС‚СЊ K Р·Р°РїРёСЃРµР№ РїРѕСЃР»Рµ Р·Р°РїРёСЃРё СЃ РЅРѕРјРµСЂРѕРј N.
 #pragma once
 #include "Pair.h"
 #include <iostream>
@@ -17,23 +17,23 @@
 using namespace std;
 int make_file(const char* f_name)
 {
-	fstream stream(f_name, ios::out | ios::trunc);//открыть для записи
-	if (!stream)return -1;//ошибка открытия файла
+	fstream stream(f_name, ios::out | ios::trunc);
+	if (!stream)return -1;
 	int n;
 	Pair p;
-	cout << "Количество записей: "; cin >> n;
+	cout << "РљРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РїРёСЃРµР№: "; cin >> n;
 	for (int i = 0;i < n;i++)
 	{
-		cin >> p;//ввод атрибутов объекта из стандартного потока
-		stream << p << "\n";//запись объекта в файловый поток
+		cin >> p;
+		stream << p << "\n";
 	}
-	stream.close();//закрыть поток
-	return n;//вернуть количество записанных объектов
+	stream.close();
+	return n;
 }
 int print_file(const char* f_name)
 {
-	fstream stream(f_name, ios::in);//открыть для чтения
-	if (!stream)return -1;//ошибка открытия файла
+	fstream stream(f_name, ios::in);
+	if (!stream)return -1;
 	Pair p; int i = 0;
 	while (stream >> p)
 	{
@@ -45,29 +45,26 @@ int print_file(const char* f_name)
 }
 int del_file(const char* f_name, Pair k)
 {
-	fstream temp("temp", ios::out);//открыть для записи
-	fstream stream(f_name, ios::in);//открыть для чтения
-	if (!stream)return -1;//ошибка открытия файла
+	fstream temp("temp", ios::out);
+	fstream stream(f_name, ios::in);
+	if (!stream)return -1;
 	int i = 0;Pair p;
-	while (stream >> p)//пока нет конца файла выполняем чтение объекта
+	while (stream >> p)
 	{
-		//если прочитан признак конца файла,то выход из цикла
 		if (stream.eof())break;
 		i++;
-		//если объект меньше k, то записываем его во вспомогательый файл
 		if (p < k || p == k) temp << p;
 	}
-	//закрыть файлы
 	stream.close(); temp.close();
-	remove(f_name);//удалить старый файл
-	rename("temp", f_name);// переименовать temp
-	return i;//количество прочитанных
+	remove(f_name);
+	rename("temp", f_name);
+	return i;
 }
 int add_file(const char* f_name, int k, Pair pp)
 {
-	fstream temp("temp", ios::out);//открыть для записи
-	fstream stream(f_name, ios::in);//открыть для чтения
-	if (!stream)return -1;//ошибка открытия файла
+	fstream temp("temp", ios::out);
+	fstream stream(f_name, ios::in);
+	if (!stream)return -1;
 	Pair p; int i = 0, l = 0;
 	while (stream >> p)
 	{
@@ -75,7 +72,7 @@ int add_file(const char* f_name, int k, Pair pp)
 		i++;
 		if (i == k + 1)
 		{
-			temp << pp;//записать в temp новую запись
+			temp << pp;
 			l++;
 		}
 		temp << p;
@@ -83,20 +80,20 @@ int add_file(const char* f_name, int k, Pair pp)
 	stream.close(); temp.close();
 	remove(f_name);
 	rename("temp", f_name);
-	return l;//количество добавленных
+	return l;
 }
 int add_end(const char* f_name, Pair pp)
 {
-	fstream stream(f_name, ios::app);//открыть для добавления
-	if (!stream)return -1;//ошибка открытия файла
-	stream << pp; //записать новую запись
+	fstream stream(f_name, ios::app);
+	if (!stream)return -1;
+	stream << pp;
 	return 1;
 }
 int change_file(const char* f_name, int L, Pair pp)
 {
-	fstream temp("temp", ios::out);//открыть для записи
-	fstream stream(f_name, ios::in);//открыть для чтения
-	if (!stream)return -1;//ошибка открытия файла
+	fstream temp("temp", ios::out);
+	fstream stream(f_name, ios::in);
+	if (!stream)return -1;
 	Pair p, p1; int i = 0, l = 0;
 	while (stream >> p)
 	{
@@ -113,5 +110,5 @@ int change_file(const char* f_name, int L, Pair pp)
 	stream.close(); temp.close();
 	remove(f_name);
 	rename("temp", f_name);
-	return l;//количество измененных элементов
+	return l;
 }
