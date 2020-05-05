@@ -80,8 +80,8 @@ Pair Pair::operator ++(int)
 }
 istream& operator>>(istream& in, Pair& t)
 {
-	cout << "Ïåðâîå ÷èñëî: "; in >> t.first;
-	cout << "Âòîðîå ÷èñëî: "; in >> t.second;
+	cout << "Первое число: "; in >> t.first;
+	cout << "Второе число: "; in >> t.second;
 	return in;
 }
 ostream& operator<<(ostream& out, const Pair& t)
