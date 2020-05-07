@@ -13,7 +13,6 @@
 #include "Pair.h"
 #include <iostream>
 #include <fstream>
-#include "file_work.h"
 using namespace std;
 int make_file(const char* f_name)
 {
