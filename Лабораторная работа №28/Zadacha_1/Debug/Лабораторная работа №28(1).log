@@ -1,0 +1,4 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(467,5): warning MSB8028: промежуточный каталог (Debug\) содержит файлы, которые используются совместно с другим проектом (Лабораторная работа №28(1).vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  Zadacha1_main.cpp
+D:\Инфа\Лабораторная работа №28(1)\Zadacha1_main.cpp(79,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Лабораторная работа №28(1).vcxproj -> D:\Инфа\Лабораторная работа №28(1)\Debug\Zadacha_1.exe
