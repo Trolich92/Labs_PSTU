@@ -1,0 +1,14 @@
+﻿  Zadacha5_main.cpp
+D:\Инфа\Zadacha5\List.h(32,10): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+D:\Инфа\Zadacha5\List.h(30): message : во время компиляции функции-члена класс шаблон "void List<Pair>::Vichet(T)"
+          with
+          [
+              T=Pair
+          ]
+D:\Инфа\Zadacha5\Zadacha5_main.cpp(31): message : выполняется компиляция ссылки на экземпляр шаблон функции "void List<Pair>::Vichet(T)"
+          with
+          [
+              T=Pair
+          ]
+D:\Инфа\Zadacha5\Zadacha5_main.cpp(22): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "List<Pair>"
+  Zadacha5.vcxproj -> D:\Инфа\Лабораторная работа №28(1)\Debug\Zadacha_5.exe
