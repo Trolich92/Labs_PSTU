@@ -38,7 +38,7 @@ void Graph<T>::InsertEdge(const T& vertex1, const T& vertex2, int weight)
 		if (this->adjMatrix[vertPos1][vertPos2] != 0
 			&& this->adjMatrix[vertPos2][vertPos1] != 0)
 		{
-			cout << "Ребро между вершинами уже есть" << endl;
+			cout << "ГђГҐГЎГ°Г® Г¬ГҐГ¦Г¤Гі ГўГҐГ°ГёГЁГ­Г Г¬ГЁ ГіГ¦ГҐ ГҐГ±ГІГј" << endl;
 			return;
 		}
 		else
@@ -49,7 +49,7 @@ void Graph<T>::InsertEdge(const T& vertex1, const T& vertex2, int weight)
 	}
 	else
 	{
-		cout << "Обеих вершин (или одной из них) нет в графе " << endl;
+		cout << "ГЋГЎГҐГЁГµ ГўГҐГ°ГёГЁГ­ (ГЁГ«ГЁ Г®Г¤Г­Г®Г© ГЁГ§ Г­ГЁГµ) Г­ГҐГІ Гў ГЈГ°Г ГґГҐ " << endl;
 		return;
 	}
 }
@@ -59,7 +59,7 @@ void Graph<T>::Print()
 {
 	if (!this->IsEmpty())
 	{
-		cout << "Матрица смежности графа: " << endl;
+		cout << "ГЊГ ГІГ°ГЁГ¶Г  Г±Г¬ГҐГ¦Г­Г®Г±ГІГЁ ГЈГ°Г ГґГ : " << endl;
 		for (int i = 0, vertListSize = this->vertList.size(); i < vertListSize; ++i)
 		{
 			cout << this->vertList[i] << " ";
@@ -72,7 +72,7 @@ void Graph<T>::Print()
 	}
 	else
 	{
-		cout << "Граф пуст " << endl;
+		cout << "ГѓГ°Г Гґ ГЇГіГ±ГІ " << endl;
 	}
 }
 
@@ -85,7 +85,7 @@ void Graph<T>::InsertVertex(const T& vertex)
 	}
 	else
 	{
-		cout << "Граф уже заполнен. Невозможно добавить новую вершину " << endl;
+		cout << "ГѓГ°Г Гґ ГіГ¦ГҐ Г§Г ГЇГ®Г«Г­ГҐГ­. ГЌГҐГўГ®Г§Г¬Г®Г¦Г­Г® Г¤Г®ГЎГ ГўГЁГІГј Г­Г®ГўГіГѕ ГўГҐГ°ГёГЁГ­Гі " << endl;
 		return;
 	}
 }
@@ -93,21 +93,21 @@ void Graph<T>::InsertVertex(const T& vertex)
 template<class T>
 vector<T> Graph<T>::GetNbrs(const T& vertex)
 {
-	vector<T> nbrsList; // создание списка соседей
-	int vertPos = this->GetVertPos(vertex); // вычисление позиции vertex в матрице смежности
+	vector<T> nbrsList; // Г±Г®Г§Г¤Г Г­ГЁГҐ Г±ГЇГЁГ±ГЄГ  Г±Г®Г±ГҐГ¤ГҐГ©
+	int vertPos = this->GetVertPos(vertex); // ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ vertex Гў Г¬Г ГІГ°ГЁГ¶ГҐ Г±Г¬ГҐГ¦Г­Г®Г±ГІГЁ
 	if (vertPos != (-1)) 
 	{
-		//проверка, что vertex есть в матрице смежности
+		//ГЇГ°Г®ГўГҐГ°ГЄГ , Г·ГІГ® vertex ГҐГ±ГІГј Гў Г¬Г ГІГ°ГЁГ¶ГҐ Г±Г¬ГҐГ¦Г­Г®Г±ГІГЁ
 			for (int i = 0, vertListSize = this->vertList.size(); i < vertListSize; ++i)
 			{
 				if (this->adjMatrix[vertPos][i] != 0 &&
-					this->adjMatrix[i][vertPos] != 0) // вычисление соседей
+					this->adjMatrix[i][vertPos] != 0) // ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГҐ Г±Г®Г±ГҐГ¤ГҐГ©
 
-					nbrsList.push_back(this->vertList[i]); //запись соседей в вектор
+					nbrsList.push_back(this->vertList[i]); //Г§Г ГЇГЁГ±Гј Г±Г®Г±ГҐГ¤ГҐГ© Гў ГўГҐГЄГІГ®Г°
 
 			}
 	}
-	return nbrsList; //возврат списка соседей
+	return nbrsList; //ГўГ®Г§ГўГ°Г ГІ Г±ГЇГЁГ±ГЄГ  Г±Г®Г±ГҐГ¤ГҐГ©
 }
 
 template<class T>
@@ -125,9 +125,9 @@ int Graph<T>::GetWeight(const T& vertex1, const T& vertex2)
 template<class T>
 int Graph<T>::GetAmountEdges()
 {
-	int amount = 0; // обнуляем счетчик
+	int amount = 0; // Г®ГЎГ­ГіГ«ГїГҐГ¬ Г±Г·ГҐГІГ·ГЁГЄ
 	if (!this->IsEmpty())
-	{ // проверяем, что граф не пуст
+	{ // ГЇГ°Г®ГўГҐГ°ГїГҐГ¬, Г·ГІГ® ГЈГ°Г Гґ Г­ГҐ ГЇГіГ±ГІ
 		for (int i = 0, vertListSize = this->vertList.size();
 			i < vertListSize; ++i)
 		{
@@ -135,14 +135,14 @@ int Graph<T>::GetAmountEdges()
 			{
 				if (this->adjMatrix[i][j] ==
 					this->adjMatrix[j][i] &&
-					this->adjMatrix[i][j] != 0) // находим рёбра
-					amount += 1; // считаем количество рёбер
+					this->adjMatrix[i][j] != 0) // Г­Г ГµГ®Г¤ГЁГ¬ Г°ВёГЎГ°Г 
+					amount += 1; // Г±Г·ГЁГІГ ГҐГ¬ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г°ВёГЎГҐГ°
 			}
 		}
-		return (amount / 2); // приводим счетчик к корректному результату и возвращаем его
+		return (amount / 2); // ГЇГ°ГЁГўГ®Г¤ГЁГ¬ Г±Г·ГҐГІГ·ГЁГЄ ГЄ ГЄГ®Г°Г°ГҐГЄГІГ­Г®Г¬Гі Г°ГҐГ§ГіГ«ГјГІГ ГІГі ГЁ ГўГ®Г§ГўГ°Г Г№Г ГҐГ¬ ГҐГЈГ®
 	}
 	else
-		return 0; // если граф пуст, возвращаем 0
+		return 0; // ГҐГ±Г«ГЁ ГЈГ°Г Гґ ГЇГіГ±ГІ, ГўГ®Г§ГўГ°Г Г№Г ГҐГ¬ 0
 }
 
 template<class T>
@@ -177,10 +177,10 @@ int Graph<T>::GetVertPos(const T& vertex)
 	return -1;
 }
 
-template<class T> //объявление шаблона с формальным параметром класс Т
-Graph<T>::Graph() //конструктор, который инициализирует значения объектов класса Graph
+template<class T> //Г®ГЎГєГїГўГ«ГҐГ­ГЁГҐ ГёГ ГЎГ«Г®Г­Г  Г± ГґГ®Г°Г¬Г Г«ГјГ­Г»Г¬ ГЇГ Г°Г Г¬ГҐГІГ°Г®Г¬ ГЄГ«Г Г±Г± Г’
+Graph<T>::Graph() //ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г°, ГЄГ®ГІГ®Г°Г»Г© ГЁГ­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°ГіГҐГІ Г§Г­Г Г·ГҐГ­ГЁГї Г®ГЎГєГҐГЄГІГ®Гў ГЄГ«Г Г±Г±Г  Graph
 {
-	//перебор строк и столбцов матрицы смежности и заполнение её нулями
+	//ГЇГҐГ°ГҐГЎГ®Г° Г±ГІГ°Г®ГЄ ГЁ Г±ГІГ®Г«ГЎГ¶Г®Гў Г¬Г ГІГ°ГЁГ¶Г» Г±Г¬ГҐГ¦Г­Г®Г±ГІГЁ ГЁ Г§Г ГЇГ®Г«Г­ГҐГ­ГЁГҐ ГҐВё Г­ГіГ«ГїГ¬ГЁ
 	for (int i = 0; i < maxSize; ++i) 
 	{
 		for (int j = 0; j < maxSize; ++j) 
@@ -200,31 +200,31 @@ Graph<int> graph;
 
 Graph<int> makeGraph()
 {
-	Graph<int> graph; // создание графа, содержащего вершины с номерами целого типа
-	int amountVerts, amountEdges, sourceVertex, targetVertex, edgeWeight; // создание необходимых для ввода графа переменных
-	cout << "Введите количество вершин графа: "; cin >> amountVerts; cout << endl; // ввод количества вершин графа в переменную amountVerts
-	cout << "Введите количество ребер графа: "; cin >> amountEdges; cout << endl; // ввод количества рёбер графа в переменную amountEdges
+	Graph<int> graph; // Г±Г®Г§Г¤Г Г­ГЁГҐ ГЈГ°Г ГґГ , Г±Г®Г¤ГҐГ°Г¦Г Г№ГҐГЈГ® ГўГҐГ°ГёГЁГ­Г» Г± Г­Г®Г¬ГҐГ°Г Г¬ГЁ Г¶ГҐГ«Г®ГЈГ® ГІГЁГЇГ 
+	int amountVerts, amountEdges, sourceVertex, targetVertex, edgeWeight; // Г±Г®Г§Г¤Г Г­ГЁГҐ Г­ГҐГ®ГЎГµГ®Г¤ГЁГ¬Г»Гµ Г¤Г«Гї ГўГўГ®Г¤Г  ГЈГ°Г ГґГ  ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г»Гµ
+	cout << "Г‚ГўГҐГ¤ГЁГІГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГўГҐГ°ГёГЁГ­ ГЈГ°Г ГґГ : "; cin >> amountVerts; cout << endl; // ГўГўГ®Г¤ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ  ГўГҐГ°ГёГЁГ­ ГЈГ°Г ГґГ  Гў ГЇГҐГ°ГҐГ¬ГҐГ­Г­ГіГѕ amountVerts
+	cout << "Г‚ГўГҐГ¤ГЁГІГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г°ГҐГЎГҐГ° ГЈГ°Г ГґГ : "; cin >> amountEdges; cout << endl; // ГўГўГ®Г¤ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ  Г°ВёГЎГҐГ° ГЈГ°Г ГґГ  Гў ГЇГҐГ°ГҐГ¬ГҐГ­Г­ГіГѕ amountEdges
 	//int** adjMatrix = new int* [amountVerts];
 	//for (int i = 0; i < amountVerts; i++)
 	//	adjMatrix[i] = new int[amountVerts];
 	for (int i = 1; i <= amountVerts; ++i) 
 	{
-		int* vertPtr = &i; // запоминаем адрес вершины с помощью указателя
-		graph.InsertVertex(*vertPtr); //передаём ссылку на вершину в функцию InsertVertex; происходит вставка вершины в вектор вершин
+		int* vertPtr = &i; // Г§Г ГЇГ®Г¬ГЁГ­Г ГҐГ¬ Г Г¤Г°ГҐГ± ГўГҐГ°ГёГЁГ­Г» Г± ГЇГ®Г¬Г®Г№ГјГѕ ГіГЄГ Г§Г ГІГҐГ«Гї
+		graph.InsertVertex(*vertPtr); //ГЇГҐГ°ГҐГ¤Г ВёГ¬ Г±Г±Г»Г«ГЄГі Г­Г  ГўГҐГ°ГёГЁГ­Гі Гў ГґГіГ­ГЄГ¶ГЁГѕ InsertVertex; ГЇГ°Г®ГЁГ±ГµГ®Г¤ГЁГІ ГўГ±ГІГ ГўГЄГ  ГўГҐГ°ГёГЁГ­Г» Гў ГўГҐГЄГІГ®Г° ГўГҐГ°ГёГЁГ­
 	}
 
 	for (int i = 0; i < amountEdges; ++i)
 	{
-		cout << "Исходная вершина: "; cin >> sourceVertex; cout << endl; // ввод исходной вершины
-		int* sourceVertPtr = &sourceVertex; // запоминаем адрес исходной вершины
-		cout << "Конечная вершина: "; cin >> targetVertex; cout << endl; // ввод вершины, до которой будет идти ребро от исходной вершины
-		int* targetVertPtr = &targetVertex; // запоминаем адрес конечной вершины (до которой будет идти ребро от исходной вершины)
+		cout << "Г€Г±ГµГ®Г¤Г­Г Гї ГўГҐГ°ГёГЁГ­Г : "; cin >> sourceVertex; cout << endl; // ГўГўГ®Г¤ ГЁГ±ГµГ®Г¤Г­Г®Г© ГўГҐГ°ГёГЁГ­Г»
+		int* sourceVertPtr = &sourceVertex; // Г§Г ГЇГ®Г¬ГЁГ­Г ГҐГ¬ Г Г¤Г°ГҐГ± ГЁГ±ГµГ®Г¤Г­Г®Г© ГўГҐГ°ГёГЁГ­Г»
+		cout << "ГЉГ®Г­ГҐГ·Г­Г Гї ГўГҐГ°ГёГЁГ­Г : "; cin >> targetVertex; cout << endl; // ГўГўГ®Г¤ ГўГҐГ°ГёГЁГ­Г», Г¤Г® ГЄГ®ГІГ®Г°Г®Г© ГЎГіГ¤ГҐГІ ГЁГ¤ГІГЁ Г°ГҐГЎГ°Г® Г®ГІ ГЁГ±ГµГ®Г¤Г­Г®Г© ГўГҐГ°ГёГЁГ­Г»
+		int* targetVertPtr = &targetVertex; // Г§Г ГЇГ®Г¬ГЁГ­Г ГҐГ¬ Г Г¤Г°ГҐГ± ГЄГ®Г­ГҐГ·Г­Г®Г© ГўГҐГ°ГёГЁГ­Г» (Г¤Г® ГЄГ®ГІГ®Г°Г®Г© ГЎГіГ¤ГҐГІ ГЁГ¤ГІГЁ Г°ГҐГЎГ°Г® Г®ГІ ГЁГ±ГµГ®Г¤Г­Г®Г© ГўГҐГ°ГёГЁГ­Г»)
 
-		cout << "Вес ребра: "; cin >> edgeWeight; cout << endl; // ввод числового значения веса ребра в переменную edgeWeight
-		graph.InsertEdge(*sourceVertPtr, *targetVertPtr, edgeWeight); // вставка ребра весом edgeWeight между исходной и конечной вершинами
+		cout << "Г‚ГҐГ± Г°ГҐГЎГ°Г : "; cin >> edgeWeight; cout << endl; // ГўГўГ®Г¤ Г·ГЁГ±Г«Г®ГўГ®ГЈГ® Г§Г­Г Г·ГҐГ­ГЁГї ГўГҐГ±Г  Г°ГҐГЎГ°Г  Гў ГЇГҐГ°ГҐГ¬ГҐГ­Г­ГіГѕ edgeWeight
+		graph.InsertEdge(*sourceVertPtr, *targetVertPtr, edgeWeight); // ГўГ±ГІГ ГўГЄГ  Г°ГҐГЎГ°Г  ГўГҐГ±Г®Г¬ edgeWeight Г¬ГҐГ¦Г¤Гі ГЁГ±ГµГ®Г¤Г­Г®Г© ГЁ ГЄГ®Г­ГҐГ·Г­Г®Г© ГўГҐГ°ГёГЁГ­Г Г¬ГЁ
 	}
 	cout << endl;
-	graph.Print();//печать матрицы смежности
+	graph.Print();//ГЇГҐГ·Г ГІГј Г¬Г ГІГ°ГЁГ¶Г» Г±Г¬ГҐГ¦Г­Г®Г±ГІГЁ
 	return graph;
 }
 
@@ -258,7 +258,7 @@ void setCoord(int i, int n)
 	vertC[i].y = y1;
 }
 
-void drawCircle(int x, int y, int R) //рисуем круг в заданных координатах
+void drawCircle(int x, int y, int R) //Г°ГЁГ±ГіГҐГ¬ ГЄГ°ГіГЈ Гў Г§Г Г¤Г Г­Г­Г»Гµ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ Гµ
 {
 	glColor3f(1.0, 1.0, 1.0);
 	float x1, y1;
@@ -309,7 +309,7 @@ void drawVertex(int n)
 	}
 }
 
-void drawLine(int text, int x0, int y0, int x1, int y1) //ребро неориентированный взвешенный граф
+void drawLine(int text, int x0, int y0, int x1, int y1) //Г°ГҐГЎГ°Г® Г­ГҐГ®Г°ГЁГҐГ­ГІГЁГ°Г®ГўГ Г­Г­Г»Г© ГўГ§ГўГҐГёГҐГ­Г­Г»Г© ГЈГ°Г Гґ
 {
 	glColor3f(0.0f, 0.0f, 0.0f);
 	glBegin(GL_LINES);
@@ -358,7 +358,7 @@ void display()
 	glShadeModel(GL_SMOOTH);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0, WinW, 0, WinH); //ставим начало координат в левый нижний угол
+	gluOrtho2D(0, WinW, 0, WinH);
 	glViewport(0, 0, WinW, WinH);
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
