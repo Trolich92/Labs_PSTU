@@ -6,12 +6,14 @@
 #include <sstream>
 using namespace std;
 int WinW, WinH;
-int maxSize = 20;
+const int maxSize = 20;
 template <class T>
 class Graph
 {
-	int adjMatrix[20][20] = { 0 };
+	int adjMatrix[maxSize][maxSize] = { 0 };
 	vector<T> vertList;
+	vector<T> labelList;
+	bool* visitedVerts = new bool[vertList.size()];
 public:
 	Graph();
 	~Graph();
@@ -26,7 +28,110 @@ public:
 	void InsertEdge(const T& vertex1, const T& vertex2, int weight);
 	void Print();
 	void DrawGraph();
+	void FillLabels(T& startVertex);
+	int Dijkstra(T& startVertex);
+	bool AllVisited(bool* visitedVerts);
 };
+
+template<class T>
+int Graph<T>::Dijkstra(T& startVertex)
+{
+	for (int i = 0; i < vertList.size(); i++)
+		visitedVerts[i] = false;
+	for (int i = 0; i < vertList.size(); i++)
+		for (int j = 0; j < vertList.size(); j++)
+			if (adjMatrix[i][j] < 0)
+				return -1;
+	if (GetVertPos(startVertex) == -1)
+		return -2;
+	T curSrc;
+	int counter = 0;
+	int minLabel = 1000000;
+	vector<T> neighbors = GetNbrs(startVertex);
+	for (int i = 0; i < neighbors.size(); ++i)
+	{
+		int startLabel = labelList[GetVertPos(startVertex)]; //метка текущей вершины
+		int weight = GetWeight(startVertex, neighbors[i]);   //вес ребра до соседней вершины
+		int nIndex = GetVertPos(neighbors[i]); //индекс соседней вершины
+		int nextLabel = labelList[nIndex]; //метка соседней вершины
+		if (startLabel + weight < nextLabel) //Если значение суммы текущей метки и веса ребра меньше значения соседней метки
+			labelList[nIndex] = startLabel + weight; //Обновление соседней метки
+		if (labelList[nIndex] < minLabel)
+			minLabel = labelList[nIndex]; //Определение наименьшей метки у соседних вершин
+	}
+
+	for (int i = 0; i < neighbors.size(); ++i) //Все ли соседние вершины проверены
+		if (labelList[GetVertPos(neighbors[i])] != 1000000)
+			counter += 1;
+
+	if (counter == neighbors.size()) //Текущая вершина помечается обработанной
+		visitedVerts[GetVertPos(startVertex)] = true;
+
+	for (int i = 0; i < neighbors.size(); ++i) //Поиск новой опорной вершины с наименьшей меткой
+		if (labelList[GetVertPos(neighbors[i])] == minLabel)
+			curSrc = neighbors[i];
+	/* Проверка остальных вершин графа */ 
+	while (!AllVisited(visitedVerts)) //Пока все вершины не обработаны
+	{
+		neighbors = GetNbrs(curSrc); //Вектор соседей новой опорной вершины
+		int count = 0;
+		minLabel = 1000000;
+		for (int i = 0; i < neighbors.size(); i++) //Обход соседних вершин
+		{
+			int curLabel = labelList[GetVertPos(curSrc)]; //Метка текущей опорной вершины
+			int weight = GetWeight(curSrc, neighbors[i]); //Вес ребра до соседней вершины
+			int nIndex = GetVertPos(neighbors[i]); //Индекс соседней вершины
+			int nextLabel = labelList[nIndex]; //Метка соседней 
+
+			if (curLabel + weight < nextLabel) //Если значение суммы текущей метки и веса ребра меньше значения соседней метки
+				labelList[nIndex] = curLabel + weight; //Метка соседней вершины обновляется
+
+			if (labelList[nIndex] < minLabel && visitedVerts[nIndex] != true) //Поиск минимальной метки среди не обработанных вершин
+				minLabel = labelList[nIndex];
+
+			count += 1; //Подсчёт посещённых соседей
+		}
+		if (count == neighbors.size()) //Если все соседи посещены
+			visitedVerts[GetVertPos(curSrc)] = true; //Опорная вершина помечается обработанной
+
+		for (int i = 0; i < neighbors.size(); ++i) //Поиск новой опорной вершины
+			if (labelList[GetVertPos(neighbors[i])] == minLabel || visitedVerts[GetVertPos(neighbors[i])] != true)
+				curSrc = neighbors[i];
+	}
+
+	/* Вывод результата работы алгоритма на экран */
+	for (int i = 0; i < GetVertPos(startVertex); ++i)
+	{
+		cout << "Кратчайшее расстояние от вершины " << startVertex << " до вершины " << vertList[i] << " равно " << labelList[GetVertPos(vertList[i])] << endl;
+	}
+
+	for (int i = GetVertPos(startVertex) + 1; i < vertList.size(); ++i)
+	{
+		cout << "Кратчайшее расстояние от вершины " << startVertex << " до вершины " << vertList[i] << " равно " << labelList[GetVertPos(vertList[i])] << endl;
+	}
+}
+
+template <class T>
+bool Graph<T>::AllVisited(bool* visitedVerts) //Проверка все ли вершины обработаны
+{
+	bool flag = true; //Изначально считается, что все вершины обработаны
+for (int i = 0; i < vertList.size(); i++)
+	if (visitedVerts[i] != true)
+		flag = false; //Если есть хотя бы одна необработанная вершина - флаг принимает значение false
+return flag; //Возвращается значение флага: true если все обработаны, false в ином случае
+}
+
+
+template<class T>
+void Graph<T>::FillLabels(T& startVertex)
+{
+	for (int i = 0, size = vertList.size(); i < size;++i)
+	{
+		labelList.push_back(1000000);
+	}
+	int pos = GetVertPos(startVertex);
+	labelList[pos] = 0;
+}
 
 template<class T>
 void Graph<T>::InsertEdge(const T& vertex1, const T& vertex2, int weight)
@@ -38,7 +143,7 @@ void Graph<T>::InsertEdge(const T& vertex1, const T& vertex2, int weight)
 		if (this->adjMatrix[vertPos1][vertPos2] != 0
 			&& this->adjMatrix[vertPos2][vertPos1] != 0)
 		{
-			cout << "Ðåáðî ìåæäó âåðøèíàìè óæå åñòü" << endl;
+			cout << "Ребро между вершинами уже есть" << endl;
 			return;
 		}
 		else
@@ -49,7 +154,7 @@ void Graph<T>::InsertEdge(const T& vertex1, const T& vertex2, int weight)
 	}
 	else
 	{
-		cout << "Îáåèõ âåðøèí (èëè îäíîé èç íèõ) íåò â ãðàôå " << endl;
+		cout << "Обеих вершин (или одной из них) нет в графе " << endl;
 		return;
 	}
 }
@@ -59,7 +164,7 @@ void Graph<T>::Print()
 {
 	if (!this->IsEmpty())
 	{
-		cout << "Ìàòðèöà ñìåæíîñòè ãðàôà: " << endl;
+		cout << "Матрица смежности графа: " << endl;
 		for (int i = 0, vertListSize = this->vertList.size(); i < vertListSize; ++i)
 		{
 			cout << this->vertList[i] << " ";
@@ -69,10 +174,16 @@ void Graph<T>::Print()
 			}
 			cout << endl;
 		}
+		T startVertex;
+		cout << "Введите начальную вершину: ";
+		cin >> startVertex;
+		cout << endl;
+		FillLabels(startVertex);
+		Dijkstra(startVertex);
 	}
 	else
 	{
-		cout << "Ãðàô ïóñò " << endl;
+		cout << "Граф пуст " << endl;
 	}
 }
 
@@ -85,7 +196,7 @@ void Graph<T>::InsertVertex(const T& vertex)
 	}
 	else
 	{
-		cout << "Ãðàô óæå çàïîëíåí. Íåâîçìîæíî äîáàâèòü íîâóþ âåðøèíó " << endl;
+		cout << "Граф уже заполнен. Невозможно добавить новую вершину " << endl;
 		return;
 	}
 }
@@ -93,21 +204,21 @@ void Graph<T>::InsertVertex(const T& vertex)
 template<class T>
 vector<T> Graph<T>::GetNbrs(const T& vertex)
 {
-	vector<T> nbrsList; // ñîçäàíèå ñïèñêà ñîñåäåé
-	int vertPos = this->GetVertPos(vertex); // âû÷èñëåíèå ïîçèöèè vertex â ìàòðèöå ñìåæíîñòè
+	vector<T> nbrsList; // создание списка соседей
+	int vertPos = this->GetVertPos(vertex); // вычисление позиции vertex в матрице смежности
 	if (vertPos != (-1)) 
 	{
-		//ïðîâåðêà, ÷òî vertex åñòü â ìàòðèöå ñìåæíîñòè
+		//проверка, что vertex есть в матрице смежности
 			for (int i = 0, vertListSize = this->vertList.size(); i < vertListSize; ++i)
 			{
 				if (this->adjMatrix[vertPos][i] != 0 &&
-					this->adjMatrix[i][vertPos] != 0) // âû÷èñëåíèå ñîñåäåé
+					this->adjMatrix[i][vertPos] != 0) // вычисление соседей
 
-					nbrsList.push_back(this->vertList[i]); //çàïèñü ñîñåäåé â âåêòîð
+					nbrsList.push_back(this->vertList[i]); //запись соседей в вектор
 
 			}
 	}
-	return nbrsList; //âîçâðàò ñïèñêà ñîñåäåé
+	return nbrsList; //возврат списка соседей
 }
 
 template<class T>
@@ -125,9 +236,9 @@ int Graph<T>::GetWeight(const T& vertex1, const T& vertex2)
 template<class T>
 int Graph<T>::GetAmountEdges()
 {
-	int amount = 0; // îáíóëÿåì ñ÷åò÷èê
+	int amount = 0; // обнуляем счетчик
 	if (!this->IsEmpty())
-	{ // ïðîâåðÿåì, ÷òî ãðàô íå ïóñò
+	{ // проверяем, что граф не пуст
 		for (int i = 0, vertListSize = this->vertList.size();
 			i < vertListSize; ++i)
 		{
@@ -135,14 +246,14 @@ int Graph<T>::GetAmountEdges()
 			{
 				if (this->adjMatrix[i][j] ==
 					this->adjMatrix[j][i] &&
-					this->adjMatrix[i][j] != 0) // íàõîäèì ð¸áðà
-					amount += 1; // ñ÷èòàåì êîëè÷åñòâî ð¸áåð
+					this->adjMatrix[i][j] != 0) // находим рёбра
+					amount += 1; // считаем количество рёбер
 			}
 		}
-		return (amount / 2); // ïðèâîäèì ñ÷åò÷èê ê êîððåêòíîìó ðåçóëüòàòó è âîçâðàùàåì åãî
+		return (amount / 2); // приводим счетчик к корректному результату и возвращаем его
 	}
 	else
-		return 0; // åñëè ãðàô ïóñò, âîçâðàùàåì 0
+		return 0; // если граф пуст, возвращаем 0
 }
 
 template<class T>
@@ -177,10 +288,10 @@ int Graph<T>::GetVertPos(const T& vertex)
 	return -1;
 }
 
-template<class T> //îáúÿâëåíèå øàáëîíà ñ ôîðìàëüíûì ïàðàìåòðîì êëàññ Ò
-Graph<T>::Graph() //êîíñòðóêòîð, êîòîðûé èíèöèàëèçèðóåò çíà÷åíèÿ îáúåêòîâ êëàññà Graph
+template<class T> //объявление шаблона с формальным параметром класс Т
+Graph<T>::Graph() //конструктор, который инициализирует значения объектов класса Graph
 {
-	//ïåðåáîð ñòðîê è ñòîëáöîâ ìàòðèöû ñìåæíîñòè è çàïîëíåíèå å¸ íóëÿìè
+	//перебор строк и столбцов матрицы смежности и заполнение её нулями
 	for (int i = 0; i < maxSize; ++i) 
 	{
 		for (int j = 0; j < maxSize; ++j) 
@@ -200,31 +311,31 @@ Graph<int> graph;
 
 Graph<int> makeGraph()
 {
-	Graph<int> graph; // ñîçäàíèå ãðàôà, ñîäåðæàùåãî âåðøèíû ñ íîìåðàìè öåëîãî òèïà
-	int amountVerts, amountEdges, sourceVertex, targetVertex, edgeWeight; // ñîçäàíèå íåîáõîäèìûõ äëÿ ââîäà ãðàôà ïåðåìåííûõ
-	cout << "Ââåäèòå êîëè÷åñòâî âåðøèí ãðàôà: "; cin >> amountVerts; cout << endl; // ââîä êîëè÷åñòâà âåðøèí ãðàôà â ïåðåìåííóþ amountVerts
-	cout << "Ââåäèòå êîëè÷åñòâî ðåáåð ãðàôà: "; cin >> amountEdges; cout << endl; // ââîä êîëè÷åñòâà ð¸áåð ãðàôà â ïåðåìåííóþ amountEdges
+	Graph<int> graph; // создание графа, содержащего вершины с номерами целого типа
+	int amountVerts, amountEdges, sourceVertex, targetVertex, edgeWeight; // создание необходимых для ввода графа переменных
+	cout << "Введите количество вершин графа: "; cin >> amountVerts; cout << endl; // ввод количества вершин графа в переменную amountVerts
+	cout << "Введите количество ребер графа: "; cin >> amountEdges; cout << endl; // ввод количества рёбер графа в переменную amountEdges
 	//int** adjMatrix = new int* [amountVerts];
 	//for (int i = 0; i < amountVerts; i++)
 	//	adjMatrix[i] = new int[amountVerts];
 	for (int i = 1; i <= amountVerts; ++i) 
 	{
-		int* vertPtr = &i; // çàïîìèíàåì àäðåñ âåðøèíû ñ ïîìîùüþ óêàçàòåëÿ
-		graph.InsertVertex(*vertPtr); //ïåðåäà¸ì ññûëêó íà âåðøèíó â ôóíêöèþ InsertVertex; ïðîèñõîäèò âñòàâêà âåðøèíû â âåêòîð âåðøèí
+		int* vertPtr = &i; // запоминаем адрес вершины с помощью указателя
+		graph.InsertVertex(*vertPtr); //передаём ссылку на вершину в функцию InsertVertex; происходит вставка вершины в вектор вершин
 	}
 
 	for (int i = 0; i < amountEdges; ++i)
 	{
-		cout << "Èñõîäíàÿ âåðøèíà: "; cin >> sourceVertex; cout << endl; // ââîä èñõîäíîé âåðøèíû
-		int* sourceVertPtr = &sourceVertex; // çàïîìèíàåì àäðåñ èñõîäíîé âåðøèíû
-		cout << "Êîíå÷íàÿ âåðøèíà: "; cin >> targetVertex; cout << endl; // ââîä âåðøèíû, äî êîòîðîé áóäåò èäòè ðåáðî îò èñõîäíîé âåðøèíû
-		int* targetVertPtr = &targetVertex; // çàïîìèíàåì àäðåñ êîíå÷íîé âåðøèíû (äî êîòîðîé áóäåò èäòè ðåáðî îò èñõîäíîé âåðøèíû)
+		cout << "Исходная вершина: "; cin >> sourceVertex; cout << endl; // ввод исходной вершины
+		int* sourceVertPtr = &sourceVertex; // запоминаем адрес исходной вершины
+		cout << "Конечная вершина: "; cin >> targetVertex; cout << endl; // ввод вершины, до которой будет идти ребро от исходной вершины
+		int* targetVertPtr = &targetVertex; // запоминаем адрес конечной вершины (до которой будет идти ребро от исходной вершины)
 
-		cout << "Âåñ ðåáðà: "; cin >> edgeWeight; cout << endl; // ââîä ÷èñëîâîãî çíà÷åíèÿ âåñà ðåáðà â ïåðåìåííóþ edgeWeight
-		graph.InsertEdge(*sourceVertPtr, *targetVertPtr, edgeWeight); // âñòàâêà ðåáðà âåñîì edgeWeight ìåæäó èñõîäíîé è êîíå÷íîé âåðøèíàìè
+		cout << "Вес ребра: "; cin >> edgeWeight; cout << endl; // ввод числового значения веса ребра в переменную edgeWeight
+		graph.InsertEdge(*sourceVertPtr, *targetVertPtr, edgeWeight); // вставка ребра весом edgeWeight между исходной и конечной вершинами
 	}
 	cout << endl;
-	graph.Print();//ïå÷àòü ìàòðèöû ñìåæíîñòè
+	graph.Print();//печать матрицы смежности
 	return graph;
 }
 
@@ -258,7 +369,7 @@ void setCoord(int i, int n)
 	vertC[i].y = y1;
 }
 
-void drawCircle(int x, int y, int R) //ðèñóåì êðóã â çàäàííûõ êîîðäèíàòàõ
+void drawCircle(int x, int y, int R) //рисуем круг в заданных координатах
 {
 	glColor3f(1.0, 1.0, 1.0);
 	float x1, y1;
@@ -309,7 +420,7 @@ void drawVertex(int n)
 	}
 }
 
-void drawLine(int text, int x0, int y0, int x1, int y1) //ðåáðî íåîðèåíòèðîâàííûé âçâåøåííûé ãðàô
+void drawLine(int text, int x0, int y0, int x1, int y1) //ребро неориентированный взвешенный граф
 {
 	glColor3f(0.0f, 0.0f, 0.0f);
 	glBegin(GL_LINES);
@@ -358,7 +469,7 @@ void display()
 	glShadeModel(GL_SMOOTH);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0, WinW, 0, WinH);
+	gluOrtho2D(0, WinW, 0, WinH); //ставим начало координат в левый нижний угол
 	glViewport(0, 0, WinW, WinH);
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
