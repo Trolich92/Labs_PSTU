@@ -1,0 +1,5 @@
+D:\Инфа\Творческая_2\Debug\Творческая_2.vcxprojAssemblyReference.cache
+D:\Инфа\Творческая_2\Debug\Творческая2.MyForm.resources
+D:\Инфа\Творческая_2\Debug\Творческая_2.vcxproj.GenerateResource.cache
+D:\Инфа\Творческая_2\Debug\Творческая_2.exe
+D:\Инфа\Творческая_2\Debug\Творческая_2.pdb
