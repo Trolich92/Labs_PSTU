@@ -90,11 +90,11 @@ void display(void) {
 	int window_height = glutContext.window_height;
 	int shift = glutContext.shift;
 	int height = tree->getHeight();
-	int maxLeafs = pow(2, height - 1); //максимальное число листов на нижнем уровне (нумерация с нуля)
-	int width = 2 * maxLeafs - 1; //минимальная ширина дерева для печати (не конечная, но необходимая)
-	int curLevel = 0; //номер строки (на выводе)
-	int index = 0; //номер элемента в строке (нумерация с нуля)
-	int factSpaces = getPoss(index, width, curLevel, height - 1); //позиция корня (число пробелов перед ним)
+	int maxLeafs = pow(2, height - 1);
+	int width = 2 * maxLeafs - 1;
+	int curLevel = 0;
+	int index = 0;
+	int factSpaces = getPoss(index, width, curLevel, height - 1);
 	pos node;
 	vector<Tree<T>*> V;
 	vector<pos> Vi;
@@ -104,7 +104,7 @@ void display(void) {
 		R = (window_height - 2 * shift) / (2 * height - 1);
 	}
 	glutContext.R = R;
-	tree->setCoordsForNode(window_width, window_height, shift, width, height, factSpaces, curLevel, R); //установили координаты корня при рисовании
+	tree->setCoordsForNode(window_width, window_height, shift, width, height, factSpaces, curLevel, R);
 	V.push_back(tree);
 	node.col = factSpaces;
 	node.str = curLevel;
